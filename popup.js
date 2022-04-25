@@ -36,10 +36,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (popupDisabled) {
       imgElement.classList.add('disabled');
       bodyElement.classList.add('disabled');
+
       for (let popupInput of popupInputs) popupInput.setAttribute('disabled', true);
     } else {
       imgElement.classList.remove('disabled');
       bodyElement.classList.remove('disabled');
+
       for (let popupInput of popupInputs) popupInput.removeAttribute('disabled');
     }
   });
