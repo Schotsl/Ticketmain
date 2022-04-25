@@ -1,6 +1,9 @@
-// Initialize button with user's preferred color
-let changeColor = document.getElementById("changeColor");
+document.addEventListener('DOMContentLoaded', function () {
+  const img = document.getElementById("ticketmain_img");
+  const body = document.getElementById("ticketmain_body");
 
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
+  img.addEventListener("click", () => {
+    img.classList.toggle('disabled');
+    body.classList.toggle('disabled');
+  });
 });

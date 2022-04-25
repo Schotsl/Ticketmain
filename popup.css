@@ -1,16 +1,7 @@
-/* body {
-  background: none;
+.disabled {
+  filter: grayscale(100%);
+  opacity: 0.3;
 }
-
-body {
-
-form {
-  background: green;
-  border-radius: 10px;
-  width: 50%;
-  height: 100px;
-  text-align: center;
-} */
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0px;
@@ -33,6 +24,8 @@ body {
 }
 
 img {
+  cursor: pointer;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
   border-radius: 15px;
 }
 
