@@ -13,7 +13,7 @@ function getTickets() {
     for (let i = 0; i < liItems.length; i++) {
       const ticket = liItems[i];
       const ticketAmount = parseInt(ticket.getElementsByTagName("h4")[0].innerText.split(" ")[0]);
-      const ticketPrice = ticket.getElementsByTagName("strong")[0].innerText.split("\n")[0];
+      const ticketPrice = parseFloat(ticket.getElementsByTagName("strong")[0].innerText.split("\n")[0].substring(1));
       tickets.push({htmlElement: ticket, ticketAmount, ticketPrice});
     }
 
@@ -35,27 +35,22 @@ function findBuyTicketButton() {
   }
 }
 
-function reloadPage(interval = 10000) {
+function reloadPage() {
   console.log("Reloading page in " + interval / 1000 + " seconds");
   setTimeout(() => {
     window.location.reload();
   }, interval);
 }
 
+function playNotification() {
+  const url = chrome.runtime.getURL("assets/audio/notification.mp3");
+  const audio = new Audio(url);
+
+  audio.play();
+}
+
 function checkForTickets() {
   console.log("Checking for tickets...");
-
-  // Get options out of storage
-  let minPrice, maxPrice, amount, interval, disabled;
-
-  chrome.storage.sync.get(["minPrice", "maxPrice", "amount", "interval", "disabled"], function(items) {
-    minPrice = items.minPrice || 0;
-    maxPrice = items.maxPrice || 999999;
-    amount = items.amount || 0;
-    interval = items.interval || 10000;
-    disabled = items.disabled || false;
-  });
-
   // Stop when disabled
   if (disabled) {
     return;
@@ -69,7 +64,7 @@ function checkForTickets() {
     console.log("No tickets found");
 
     // Retry ticket search
-    reloadPage(interval);
+    reloadPage();
     return
   }
   
@@ -77,13 +72,17 @@ function checkForTickets() {
   for (let i = 0; i < tickets.length; i++) {
     const ticket = tickets[i];
 
+    console.log("Options:", minPrice, maxPrice, amount, interval, disabled);
+
     // Check if the ticket is within the price range
     if ((ticket.ticketAmount == amount || amount == 0) && ticket.ticketPrice >= minPrice && ticket.ticketPrice <= maxPrice) {
       console.log("Matching ticket found!");
       selectTicket(ticket);
+
+      playNotification();
       
       // Wait for new page load
-      setTimeout(findBuyTicketButton().click, 3000);
+      setTimeout(() => {findBuyTicketButton().click()}, 3000);
       break;
     } else {
       console.log("Ticket didn't match price range");
@@ -91,15 +90,58 @@ function checkForTickets() {
   }
 
   // Retry ticket search
-  reloadPage(interval);
+  reloadPage();
 }
 
-console.log("TicketSwap detected! Running script...");
-let disabled = false;
+// Update options
+let minPrice = 0, maxPrice = 100, amount = 0, interval = 10000, disabled = true;
 
-chrome.storage.sync.get(["disabled"], function(items) {
-  disabled = items.disabled || false;
+chrome.storage.local.get(['ticketmain_min'], function(result) {
+  minPrice = result.ticketmain_min;
 });
+
+chrome.storage.local.get(['ticketmain_max'], function(result) {
+  maxPrice = result.ticketmain_max;
+});
+
+chrome.storage.local.get(['ticketmain_amount'], function(result) {
+  amount = result.ticketmain_amount;
+});
+
+chrome.storage.local.get(['ticketmain_interval'], function(result) {
+  interval = result.ticketmain_interval;
+});
+
+chrome.storage.local.get(['ticketmain_disabled'], function(result) {
+  disabled = result.ticketmain_disabled;
+});
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  if (namespace === "sync") {
+    for (let key in changes) {
+      switch (key) {
+        case "ticketmain_min":
+          minPrice = changes[key].newValue;
+          break;
+        case "ticketmain_max":
+          maxPrice = changes[key].newValue;
+          break;
+        case "ticketmain_amount":
+          amount = changes[key].newValue;
+          break;
+        case "ticketmain_interval":
+          interval = changes[key].newValue;
+          break;
+        case "ticketmain_disabled":
+          disabled = changes[key].newValue;
+          if (!disabled) checkForTickets();
+          break;
+      }
+    }
+  }
+});
+
+console.log("TicketSwap detected! Running script...");
 
 if (!disabled) checkForTickets();
 else console.log("Extention is disabled");
