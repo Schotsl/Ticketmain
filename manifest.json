@@ -1,9 +1,9 @@
 {
   "name": "Ticketmain",
   "version": "1.0.0",
+  "permissions": ["storage"],
   "description": "Too lazy, slow or distracted to check TicketSwap yourself? Then this is just the extension for you. This extension will reload the page, check for available tickets and proceed to the next page!",
   "manifest_version": 3,
-  "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html"
   },

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.storage.sync.get(['ticketmain_min'], (result) => minElement.value = result.ticketmain_min);
   chrome.storage.sync.get(['ticketmain_max'], (result) => maxElement.value = result.ticketmain_max);
   chrome.storage.sync.get(['ticketmain_amount'], (result) => amountElement.value = result.ticketmain_amount);
-  chrome.storage.sync.get(['ticketmain_interval'], (result) => intervalElement.value = result.ticketmain_interval);
+  chrome.storage.sync.get(['ticketmain_interval'], (result) => intervalElement.value = result.ticketmain_interval / 1000);
   chrome.storage.sync.get(['ticketmain_disabled'], (result) => {
     popupDisabled = result.ticketmain_disabled;
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  intervalElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_interval: intervalElement.value }));
+  intervalElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_interval: intervalElement.value * 1000 }));
   amountElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_amount: amountElement.value }));
   maxElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_max: maxElement.value }));
   minElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_min: minElement.value }));
