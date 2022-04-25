@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+  let popupInputs = document.getElementsByTagName('input');
   let popupDisabled = false;
 
   const imgElement = document.getElementById("ticketmain_img");
@@ -35,9 +36,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (popupDisabled) {
       imgElement.classList.add('disabled');
       bodyElement.classList.add('disabled');
+      for (let popupInput of popupInputs) popupInput.setAttribute('disabled', true);
     } else {
       imgElement.classList.remove('disabled');
       bodyElement.classList.remove('disabled');
+      for (let popupInput of popupInputs) popupInput.removeAttribute('disabled');
     }
   });
 });
