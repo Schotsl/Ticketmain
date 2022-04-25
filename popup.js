@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  intervalElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_interval: intervalElement.value * 1000 }));
-  amountElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_amount: amountElement.value }));
-  maxElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_max: maxElement.value }));
-  minElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_min: minElement.value }));
+  intervalElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_interval: parseInt(intervalElement.value) * 1000 }));
+  amountElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_amount: parseInt(amountElement.value) }));
+  maxElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_max: parseInt(maxElement.value) }));
+  minElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_min: parseInt(minElement.value) }));
   imgElement.addEventListener('click', () => {
     popupDisabled = !popupDisabled;
     chrome.storage.sync.set({ ticketmain_disabled: popupDisabled })
