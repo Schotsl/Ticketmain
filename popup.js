@@ -17,3 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
   amountElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_amount: minElement.value }));
   intervalElement.addEventListener('input', () => chrome.storage.sync.set({ ticketmain_interval: minElement.value }));
 });
+
+// const url = chrome.runtime.getURL("assets/audio/notification.mp3");
+// const audio = new Audio(url);
+
+// audio.play();
