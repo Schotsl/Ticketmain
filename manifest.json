@@ -12,5 +12,11 @@
     "32": "/images/icon_32.png",
     "48": "/images/icon_48.png",
     "128": "/images/icon_128.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.ticketswap.com/event/*"],
+      "js": ["ticketswapScript.js"]
+    }
+  ]
 }
