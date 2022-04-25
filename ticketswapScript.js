@@ -42,13 +42,6 @@ function reloadPage() {
   }, interval);
 }
 
-function playNotification() {
-  const url = chrome.runtime.getURL("assets/audio/notification.mp3");
-  const audio = new Audio(url);
-
-  audio.play();
-}
-
 function checkForTickets() {
   console.log("Checking for tickets...");
   // Stop when disabled
@@ -79,8 +72,6 @@ function checkForTickets() {
       console.log("Matching ticket found!");
       selectTicket(ticket);
 
-      playNotification();
-      
       // Wait for new page load
       setTimeout(() => {findBuyTicketButton().click()}, 3000);
       break;

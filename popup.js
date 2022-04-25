@@ -46,8 +46,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-
-// const url = chrome.runtime.getURL("assets/audio/notification.mp3");
-// const audio = new Audio(url);
-
-// audio.play();
