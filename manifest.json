@@ -13,6 +13,9 @@
     "48": "/assets/logo/icon_48.png",
     "128": "/assets/logo/icon_128.png"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["https://*.ticketswap.com/event/*"],
