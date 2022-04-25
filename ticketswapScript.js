@@ -1,7 +1,14 @@
 function getTickets() {
   const availableTicketsField = document.querySelector(
     "[data-testid='available-tickets-list']"
-  );
+    );
+    
+    if (!availableTicketsField) {
+      return [];
+    }
+    
+    const liItems = availableTicketsField.getElementsByTagName("li");
+    const tickets = [];
 
     for (let i = 0; i < liItems.length; i++) {
       const ticket = liItems[i];
@@ -10,17 +17,7 @@ function getTickets() {
       tickets.push({htmlElement: ticket, ticketAmount, ticketPrice});
     }
 
-  const liItems = availableTicketsField.getElementsByTagName("li");
-  const tickets = [];
-
-  for (let i = 0; i < liItems.length; i++) {
-    const ticket = liItems[i];
-    const ticketAmount = parseInt(ticket.getElementsByTagName("h4")[0].innerText.split(" ")[0]);
-    const ticketPrice = ticket.getElementsByTagName("strong")[0].innerText.split("\n")[0];
-    tickets.push({ htmlElement: ticket, ticketAmount, ticketPrice });
-  }
-
-  return tickets;
+    return tickets;
 }
 
 function selectTicket(ticket) {
@@ -29,7 +26,7 @@ function selectTicket(ticket) {
 
 function findBuyTicketButton() {
   const buttons = document.getElementsByTagName("button");
-
+  
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
     if (button.innerText === "Buy ticket") {
@@ -70,7 +67,7 @@ function checkForTickets() {
     reloadPage();
     return
   }
-
+  
   // Check all the available tickets
   for (let i = 0; i < tickets.length; i++) {
     const ticket = tickets[i];
