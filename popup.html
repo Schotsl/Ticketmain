@@ -1,30 +1,77 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="button.css">
-  </head>
-  <body>
-    <form>
-      <h2>Prijs</h2>
-      <div class="form-example">
-        <label for="name">Min</label>
-        <input type="text" name="name" id="name" required>
-      </div>
 
-      <div class="form-example">
-        <label for="name">Min</label>
-        <input type="text" name="name" id="name" required>
-      </div>
+<head>
+  <link rel="stylesheet" href="popup.css">
+</head>
 
-      <div class="form-example">
-        <label for="name">Interval</label>
-        <input type="text" name="name" id="name" required>
-      </div>
+<body>
+  <header>
+    <img src="images/icon_48.png">
+  </header>
+  <form>
+    <h2>Prijs</h2>
+    <hr />
+    <div>
+      <label for="min">Min</label>
+      <input 
+        id="min"
+        min="0"
+        max="1000"
+        step="1"
+        name="min"
+        type="number" 
+        value="0.00"
+        required
+        >
+    </div>
 
-      <div class="form-example">
-        <label for="name">Aantal</label>
-        <input type="text" name="name" id="name" required>
-      </div>
-    </form>
-  </body>
+    <div>
+      <label for="max">Max</label>
+      <input 
+        id="max"
+        min="0"
+        max="1000"
+        step="1"
+        name="max"
+        type="number" 
+        value="0.00"
+        required
+        >
+    </div>
+
+    <h2>Anders</h2>
+    <hr />
+    <div>
+      <label for="max">Interval</label>
+      <input 
+        id="interval"
+        min="0.5"
+        max="10"
+        step="0.1"
+        name="interval"
+        type="number" 
+        value="1.0"
+        required
+        >
+    </div>
+
+
+    <div class="form-example">
+      <label for="max">Aantal</label>
+      <input 
+        id="amount"
+        min="1"
+        max="100"
+        step="1"
+        name="amount"
+        type="number" 
+        value="1"
+        required
+        >
+      <p>Laat het veld leeg als je geen voorkeur hebt</p>
+    </div>
+  </form>
+</body>
+
 </html>
