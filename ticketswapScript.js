@@ -118,16 +118,16 @@ let minPrice = 0.0,
     "ticketmain_price_max",
     "ticketmain_amount_min",
     "ticketmain_amount_max",
-    "ticketmain_interval",
-    "ticketmain_disabled",
+    "ticketmain_advanced_interval",
+    "ticketmain_dropdown_disabled",
   ]);
 
   minPrice = result.ticketmain_price_min;
   maxPrice = result.ticketmain_price_max;
   minAmount = result.ticketmain_amount_min;
   maxAmount = result.ticketmain_amount_max;
-  interval = result.ticketmain_interval;
-  disabled = result.ticketmain_disabled;
+  interval = result.ticketmain_advanced_interval;
+  disabled = result.ticketmain_dropdown_disabled;
 
   // Register listener for changes in user variables
   chrome.storage.onChanged.addListener(function (changes, namespace) {
