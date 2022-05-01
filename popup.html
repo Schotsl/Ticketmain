@@ -8,35 +8,70 @@
 
 <body>
   <header>
-    <img id="ticketmain_img" src="assets/logo/icon_48.png" class="disabled">
+    <label class="switch">
+      <input type="checkbox" id="ticketmain_toggle">
+      <span class="slider round"></span>
+    </label>
   </header>
-  <form id="ticketmain_body" class="disabled">
-    <h2>Prijs</h2>
-    <hr />
-    <div>
-      <label for="min">Min</label>
-      <input id="ticketmain_min" min="0" max="1000" step="1" name="min" type="number" value="0.00" required>
-    </div>
+  <div id="ticketmain_container" class="disabled">
+  <form id="ticketmain_form">
+    <fieldset>
+      <legend class="ticketmain_closed">Price</legend>
 
-    <div>
-      <label for="max">Max</label>
-      <input id="ticketmain_max" min="0" max="1000" step="1" name="max" type="number" value="100.00" required>
-    </div>
+      <hr/>
 
-    <h2>Anders</h2>
-    <hr />
-    <div>
-      <label for="max">Interval</label>
-      <input id="ticketmain_interval" min="0.5" max="10" step="0.1" name="interval" type="number" value="5.0" required>
-    </div>
+      <div class="ticketmain_hidden">
+        <label for="min">Minimum total price</label>
+        <input id="ticketmain_price_min_input" step="1" name="min" type="number" value="0.00">
+        <label id="ticketmain_price_min_error"></label>
+      </div>
 
+      <div class="ticketmain_hidden">
+        <label for="max">Maximum total price</label>
+        <input id="ticketmain_price_max_input" step="1" name="max" type="number" value="100.00">
+        <label id="ticketmain_price_max_error"></label>
+      </div>
+    </fieldset>
 
-    <div class="form-example">
-      <label for="max">Aantal</label>
-      <input id="ticketmain_amount" min="1" max="100" step="1" name="amount" type="number" value="1" required>
-      <p>Laat het veld leeg als je geen voorkeur hebt</p>
-    </div>
+    <fieldset>
+      <legend>Amount</legend>
+      
+      <hr/>
+
+      <div>
+        <label for="min">Minimum amount of tickets</label>
+        <input id="ticketmain_amount_min_input" step="1" name="min" type="number" value="0.00">
+        <label id="ticketmain_amount_min_error"></label>
+      </div>
+
+      <div>
+        <label for="max">Maximum amount of tickets</label>
+        <input id="ticketmain_amount_max_input" step="1" name="max" type="number" value="100.00">
+        <label id="ticketmain_amount_max_error"></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend class="ticketmain_closed">Advanced</legend>
+      
+      <hr/>
+      <div class="ticketmain_hidden">
+        <label for="max">Interval</label>
+        <input id="ticketmain_advanced_interval_input" min="0.5" max="10" step="0.1" name="interval" type="number" value="5.0" required>
+        <label id="ticketmain_advanced_interval_error"></label>
+      </div>
+      </fieldset>
+
+    <input type="submit" value="Update">
+
+    
   </form>
+
+  <footer>
+    <hr/>
+    Made with love by <a href="https://wouterdebruijn.nl">Wouter de Bruijn</a> and <a href="https://sjorsvanholst.nl">Sjors van Holst</a>
+  </footer>
+</div>
 </body>
 
 </html>
