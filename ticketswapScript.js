@@ -110,7 +110,7 @@ function checkForTickets() {
   reloadPage();
 }
 
-// User variables
+// Define user variables
 let minPrice = 0.0,
   maxPrice = 100.0,
   minAmount = 1,
@@ -118,15 +118,17 @@ let minPrice = 0.0,
   interval = 5000,
   disabled = true;
 
-// Get user variables from storage
-chrome.storage.sync.get([
-  "ticketmain_price_min",
-  "ticketmain_price_max",
-  "ticketmain_amount_min",
-  "ticketmain_amount_max",
-  "ticketmain_interval",
-  "ticketmain_disabled",
-], function (result) {
+(async () => {
+  // Get user variable values from storage
+  const result = await chrome.storage.sync.get([
+    "ticketmain_price_min",
+    "ticketmain_price_max",
+    "ticketmain_amount_min",
+    "ticketmain_amount_max",
+    "ticketmain_interval",
+    "ticketmain_disabled",
+  ]);
+
   minPrice = result.ticketmain_price_min;
   maxPrice = result.ticketmain_price_max;
   minAmount = result.ticketmain_amount_min;
@@ -164,4 +166,4 @@ chrome.storage.sync.get([
   });
 
   if (!disabled) checkForTickets();
-});
+})();
