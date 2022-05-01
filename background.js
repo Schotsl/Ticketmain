@@ -12,11 +12,19 @@ function setLogo(logoName = "logo") {
 }
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ ticketmain_min: 0.00 });
-  chrome.storage.sync.set({ ticketmain_max: 100.00 });
-  chrome.storage.sync.set({ ticketmain_amount: 1.0 });
-  chrome.storage.sync.set({ ticketmain_interval: 5000 });
-  chrome.storage.sync.set({ ticketmain_disabled: true });
+  chrome.storage.sync.set({ ticketmain_price_min: 0.00 });
+  chrome.storage.sync.set({ ticketmain_price_max: 0.00 });
+
+  chrome.storage.sync.set({ ticketmain_amount_min: 1 });
+  chrome.storage.sync.set({ ticketmain_amount_max: 10 });
+
+  chrome.storage.sync.set({ ticketmain_advanced_interval: 0.00 });
+
+  chrome.storage.sync.set({ ticketmain_dropdown_disabled: true });
+
+  chrome.storage.sync.set({ ticketmain_dropdowns_price: false });
+  chrome.storage.sync.set({ ticketmain_dropdowns_amount: true });
+  chrome.storage.sync.set({ ticketmain_dropdowns_advanced: false });
 });
 
 chrome.runtime.onStartup.addListener(async () => {
