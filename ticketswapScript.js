@@ -11,11 +11,11 @@ function getTickets() {
     return [];
   }
 
-  const liItems = availableTicketsField.getElementsByTagName("li");
+  const listItems = availableTicketsField.getElementsByTagName("li");
   const tickets = [];
 
-  for (let i = 0; i < liItems.length; i++) {
-    const ticket = liItems[i];
+  for (let i = 0; i < listItems.length; i++) {
+    const ticket = listItems[i];
     const ticketAmount = parseInt(
       ticket.getElementsByTagName("h4")[0].innerText.split(" ")[0],
     );
@@ -31,7 +31,7 @@ function getTickets() {
 
 /**
  * Follow the provided ticket
- * @param {*} ticket
+ * @param {{ htmlElement: HTMLElement, ticketAmount: number, ticketPrice: number }} ticket
  */
 function selectTicket(ticket) {
   ticket.htmlElement.getElementsByTagName("a")[0].click();
@@ -56,7 +56,6 @@ function findBuyTicketButton() {
  * Reload the page
  */
 function reloadPage() {
-  console.log("Reloading page in " + interval / 1000 + " seconds");
   setTimeout(() => {
     window.location.reload();
   }, interval);
@@ -66,18 +65,16 @@ function reloadPage() {
  * Automatically search for tickets
  */
 function checkForTickets() {
-  console.log("Checking for tickets...");
   // Stop when disabled
   if (disabled) {
     return;
   }
 
-  // Get thje tickets
+  // Get the tickets
   const tickets = getTickets();
 
   // Check if there are any tickets
   if (tickets.length === 0) {
-    console.log("No tickets found");
 
     // Retry ticket search
     reloadPage();
@@ -93,7 +90,6 @@ function checkForTickets() {
       (ticket.ticketAmount <= maxAmount && ticket.ticketAmount >= minAmount) &&
       ticket.ticketPrice >= minPrice && ticket.ticketPrice <= maxPrice
     ) {
-      console.log("Matching ticket found!");
       selectTicket(ticket);
 
       // Wait for new page load
@@ -101,8 +97,6 @@ function checkForTickets() {
         findBuyTicketButton().click();
       }, 3000);
       return;
-    } else {
-      console.log("Ticket didn't match price range");
     }
   }
 
@@ -110,7 +104,7 @@ function checkForTickets() {
   reloadPage();
 }
 
-// User variables
+// Define user variables
 let minPrice = 0.0,
   maxPrice = 100.0,
   minAmount = 1,
@@ -118,14 +112,17 @@ let minPrice = 0.0,
   interval = 5000,
   disabled = true;
 
-// Get user variables from storage
-chrome.storage.sync.get([
-  "ticketmain_price_min",
-  "ticketmain_price_max",
-  "ticketmain_amount_min",
-  "ticketmain_interval_max",
-  "ticketmain_disabled",
-], function (result) {
+(async () => {
+  // Get user variable values from storage
+  const result = await chrome.storage.sync.get([
+    "ticketmain_price_min",
+    "ticketmain_price_max",
+    "ticketmain_amount_min",
+    "ticketmain_amount_max",
+    "ticketmain_interval",
+    "ticketmain_disabled",
+  ]);
+
   minPrice = result.ticketmain_price_min;
   maxPrice = result.ticketmain_price_max;
   minAmount = result.ticketmain_amount_min;
@@ -163,4 +160,4 @@ chrome.storage.sync.get([
   });
 
   if (!disabled) checkForTickets();
-});
+})();

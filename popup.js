@@ -1,38 +1,4 @@
-const inputs = [
-  {
-    input: 'ticketmain_price_min_input',
-    error: 'ticketmain_price_min_error',
-    max: 100,
-    min: 0,
-  },
-  {
-    input: 'ticketmain_price_max_input',
-    error: 'ticketmain_price_max_error',
-    max: 100,
-    min: 0,
-  },
-  {
-    input: 'ticketmain_amount_min_input',
-    error: 'ticketmain_amount_min_error',
-    max: 100,
-    min: 0,
-  },
-  {
-    input: 'ticketmain_amount_min_input',
-    error: 'ticketmain_amount_max_error',
-    max: 100,
-    min: 0,
-  },
-  {
-    input: 'ticketmain_advanced_interval_input',
-    error: 'ticketmain_advanced_interval_error',
-    max: 10,
-    min: 0.5,
-  }
-]
-
 function validateInput(inputElement, errorElement, minValue, maxValue) {
-  console.log(inputElement);
   // Remove error message if it exists
   errorElement.textContent = "";
 
@@ -63,108 +29,101 @@ function validateInput(inputElement, errorElement, minValue, maxValue) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  let popupInputs = document.querySelectorAll('form input');
+  const inputObjects = [
+    {
+      input: document.getElementById("ticketmain_price_min_input"),
+      error: document.getElementById("ticketmain_price_min_error"),
+      label: "ticketmain_price_min_value",
+      max: 100,
+      min: 0,
+    },
+    {
+      input: document.getElementById("ticketmain_price_max_input"),
+      error: document.getElementById("ticketmain_price_max_error"),
+      label: "ticketmain_price_max_value",
+      max: 100,
+      min: 0,
+    },
+    {
+      input: document.getElementById("ticketmain_amount_min_input"),
+      error: document.getElementById("ticketmain_amount_min_error"),
+      label: "ticketmain_amount_min_value",
+      max: 100,
+      min: 0,
+    },
+    {
+      input: document.getElementById("ticketmain_amount_max_input"),
+      error: document.getElementById("ticketmain_amount_max_error"),
+      label: "ticketmain_amount_max_value",
+      max: 100,
+      min: 0,
+    },
+    {
+      input: document.getElementById("ticketmain_advanced_interval_input"),
+      error: document.getElementById("ticketmain_advanced_interval_error"),
+      label: "ticketmain_advanced_interval_value", 
+      max: 10,
+      min: 0.5,
+    },
+  ];
+
+  let popupInputs = document.querySelectorAll("form input");
   let popupEnabled = false;
 
   const legendElements = document.getElementsByTagName("legend");
-  
+
   const formElement = document.getElementById("ticketmain_form");
   const toggleElement = document.getElementById("ticketmain_toggle");
   const containerElement = document.getElementById("ticketmain_container");
 
-
-
-  formElement.addEventListener('submit', (event) => {
+  formElement.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const valid = inputs.every(input => {
-      const inputElement = document.getElementById(input.input);
-      const errorElement = document.getElementById(input.error);
+    if (!popupEnabled) return;
 
-      return (!validateInput(inputElement, errorElement, input.min, input.max));
+    // Validate every input
+    inputObjects.forEach((inputObject) => {
+      const { input, error, min, max } = inputObject;
+      return !validateInput(input, error, min, max);
     });
 
-    alert(valid);
-  })
-  
-  // const minElement = document.getElementById("ticketmain_min");
-  // const maxElement = document.getElementById("ticketmain_max");
-  // const amountElement = document.getElementById("ticketmain_amount");
-  // const intervalElement = document.getElementById("ticketmain_interval");
+    // Store every input in Chrome storage
+    inputObjects.forEach((inputObject) => {
+      const { input, label } = inputObject;
+      alert(input.value);
+      chrome.storage.sync.set({ [label]: input.value });
+    });
+  });
 
-  // chrome.storage.sync.get(
-  //   ["ticketmain_min"],
-  //   (result) => minElement.value = result.ticketmain_min,
-  // );
-  // chrome.storage.sync.get(
-  //   ["ticketmain_max"],
-  //   (result) => maxElement.value = result.ticketmain_max,
-  // );
-  // chrome.storage.sync.get(
-  //   ["ticketmain_amount"],
-  //   (result) => amountElement.value = result.ticketmain_amount,
-  // );
-  // chrome.storage.sync.get(
-  //   ["ticketmain_interval"],
-  //   (result) => intervalElement.value = result.ticketmain_interval / 1000,
-  // );
-  // chrome.storage.sync.get(["ticketmain_disabled"], (result) => {
-  //   popupDisabled = result.ticketmain_disabled;
+  // Load every input from Chrome storage
+  inputObjects.forEach((inputObject) => {
+    const { label, input } = inputObject;
 
-  //   if (popupDisabled) {
-  //     toggleElement.checked = false;
-  //     bodyElement.classList.add("disabled");
-  //   } else {
-  //     toggleElement.checked = true;
-  //     bodyElement.classList.remove("disabled");
-  //   }
-  // });
+    chrome.storage.sync.get([ label ], (result) => {
+      input.value = result[label];
+    });
+  });
 
-  // intervalElement.addEventListener(
-  //   "input",
-  //   () =>
-  //     chrome.storage.sync.set({
-  //       ticketmain_interval: parseInt(intervalElement.value) * 1000,
-  //     }),
-  // );
-  // amountElement.addEventListener(
-  //   "input",
-  //   () =>
-  //     chrome.storage.sync.set({
-  //       ticketmain_amount: parseInt(amountElement.value),
-  //     }),
-  // );
-  // maxElement.addEventListener(
-  //   "input",
-  //   () =>
-  //     chrome.storage.sync.set({ ticketmain_max: parseInt(maxElement.value) }),
-  // );
-  // minElement.addEventListener(
-  //   "input",
-  //   () =>
-  //     chrome.storage.sync.set({ ticketmain_min: parseInt(minElement.value) }),
-  // );
-
+  // Manage the dropdowns
   for (let i = 0; i < legendElements.length; i++) {
     const legendElement = legendElements[i];
 
-
-
     legendElement.addEventListener("click", () => {
-      if (popupEnabled) {
-      const divElements = legendElement.parentElement.getElementsByTagName('div');
-      
-      legendElement.classList.toggle('ticketmain_closed')
+      const divElements = legendElement.parentElement.getElementsByTagName(
+        "div",
+      );
 
-      for (let j = 0; j < divElements.length; j ++) {
+      legendElement.classList.toggle("ticketmain_closed");
+
+      for (let j = 0; j < divElements.length; j++) {
         const divElement = divElements[j];
 
         divElement.classList.toggle("ticketmain_hidden");
       }
-    }
     });
   }
 
+  // Manage the toggle
   toggleElement.addEventListener("change", () => {
     popupEnabled = toggleElement.checked;
     chrome.storage.sync.set({ ticketmain_disabled: toggleElement.checked });
