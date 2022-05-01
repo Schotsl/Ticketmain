@@ -11,11 +11,11 @@ function getTickets() {
     return [];
   }
 
-  const liItems = availableTicketsField.getElementsByTagName("li");
+  const listItems = availableTicketsField.getElementsByTagName("li");
   const tickets = [];
 
-  for (let i = 0; i < liItems.length; i++) {
-    const ticket = liItems[i];
+  for (let i = 0; i < listItems.length; i++) {
+    const ticket = listItems[i];
     const ticketAmount = parseInt(
       ticket.getElementsByTagName("h4")[0].innerText.split(" ")[0],
     );
@@ -31,7 +31,7 @@ function getTickets() {
 
 /**
  * Follow the provided ticket
- * @param {*} ticket
+ * @param {{ htmlElement: HTMLElement, ticketAmount: number, ticketPrice: number }} ticket
  */
 function selectTicket(ticket) {
   ticket.htmlElement.getElementsByTagName("a")[0].click();
@@ -72,7 +72,7 @@ function checkForTickets() {
     return;
   }
 
-  // Get thje tickets
+  // Get the tickets
   const tickets = getTickets();
 
   // Check if there are any tickets
