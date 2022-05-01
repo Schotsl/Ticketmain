@@ -67,8 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-  let popupEnabled = false;
-
   const popupInputs = document.querySelectorAll("form input");
   const legendElements = document.getElementsByTagName("legend");
 
@@ -79,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    if (!popupEnabled) return;
+    // if (!popupEnabled) return;
 
     // Validate every input
     inputObjects.forEach((inputObject) => {
@@ -92,6 +90,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const { input, label } = inputObject;
       chrome.storage.sync.set({ [label]: input.value });
     });
+  });
+
+  chrome.storage.sync.get([ "ticketmain_dropdown_disabled" ], (result) => {
+    updatedDisabled(result.ticketmain_dropdown_disabled, containerElement, popupInputs, toggleElement);
   });
 
   // Load every input from Chrome storage
@@ -128,21 +130,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Manage the toggle
   toggleElement.addEventListener("change", () => {
-    popupEnabled = toggleElement.checked;
-    chrome.storage.sync.set({ ticketmain_disabled: toggleElement.checked });
-
-    if (toggleElement.checked) {
-      containerElement.classList.remove("disabled");
-
-      for (const popupInput of popupInputs) {
-        popupInput.removeAttribute("disabled");
-      }
-    } else {
-      containerElement.classList.add("disabled");
-
-      for (const popupInput of popupInputs) {
-        popupInput.setAttribute("disabled", true);
-      }
-    }
+    updatedDisabled(!toggleElement.checked, containerElement, popupInputs, toggleElement)
   });
 });
+
+function updatedDisabled(disabled, containerElement, popupInputs, toggleElement) {
+  // Update the chrome storage
+  chrome.storage.sync.set({ ticketmain_dropdown_disabled: disabled });
+
+  toggleElement.checked = !disabled;
+
+  if (disabled) {
+    containerElement.classList.add("disabled");
+
+    for (const popupInput of popupInputs) {
+      popupInput.setAttribute("disabled", true);
+    }
+  } else {
+    containerElement.classList.remove("disabled");
+
+    for (const popupInput of popupInputs) {
+      popupInput.removeAttribute("disabled");
+    }
+  }
+}
