@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-
   let popupEnabled = false;
 
   const popupInputs = document.querySelectorAll("form input");
