@@ -56,7 +56,6 @@ function findBuyTicketButton() {
  * Reload the page
  */
 function reloadPage() {
-  console.log("Reloading page in " + interval / 1000 + " seconds");
   setTimeout(() => {
     window.location.reload();
   }, interval);
@@ -66,7 +65,6 @@ function reloadPage() {
  * Automatically search for tickets
  */
 function checkForTickets() {
-  console.log("Checking for tickets...");
   // Stop when disabled
   if (disabled) {
     return;
@@ -77,7 +75,6 @@ function checkForTickets() {
 
   // Check if there are any tickets
   if (tickets.length === 0) {
-    console.log("No tickets found");
 
     // Retry ticket search
     reloadPage();
@@ -93,7 +90,6 @@ function checkForTickets() {
       (ticket.ticketAmount <= maxAmount && ticket.ticketAmount >= minAmount) &&
       ticket.ticketPrice >= minPrice && ticket.ticketPrice <= maxPrice
     ) {
-      console.log("Matching ticket found!");
       selectTicket(ticket);
 
       // Wait for new page load
@@ -101,8 +97,6 @@ function checkForTickets() {
         findBuyTicketButton().click();
       }, 3000);
       return;
-    } else {
-      console.log("Ticket didn't match price range");
     }
   }
 
