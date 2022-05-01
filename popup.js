@@ -92,8 +92,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  chrome.storage.sync.get([ "ticketmain_dropdown_disabled" ], (result) => {
-    updatedDisabled(result.ticketmain_dropdown_disabled, containerElement, popupInputs, toggleElement);
+  chrome.storage.sync.get(["ticketmain_dropdown_disabled"], (result) => {
+    updatedDisabled(
+      result.ticketmain_dropdown_disabled,
+      containerElement,
+      popupInputs,
+      toggleElement,
+    );
   });
 
   // Load every input from Chrome storage
@@ -130,11 +135,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Manage the toggle
   toggleElement.addEventListener("change", () => {
-    updatedDisabled(!toggleElement.checked, containerElement, popupInputs, toggleElement)
+    updatedDisabled(
+      !toggleElement.checked,
+      containerElement,
+      popupInputs,
+      toggleElement,
+    );
   });
 });
 
-function updatedDisabled(disabled, containerElement, popupInputs, toggleElement) {
+function updatedDisabled(
+  disabled,
+  containerElement,
+  popupInputs,
+  toggleElement,
+) {
   // Update the chrome storage
   chrome.storage.sync.set({ ticketmain_dropdown_disabled: disabled });
 
