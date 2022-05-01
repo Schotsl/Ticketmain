@@ -123,7 +123,8 @@ chrome.storage.sync.get([
   "ticketmain_price_min",
   "ticketmain_price_max",
   "ticketmain_amount_min",
-  "ticketmain_interval_max",
+  "ticketmain_amount_max",
+  "ticketmain_interval",
   "ticketmain_disabled",
 ], function (result) {
   minPrice = result.ticketmain_price_min;
