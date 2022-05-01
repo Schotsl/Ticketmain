@@ -75,7 +75,6 @@ function checkForTickets() {
 
   // Check if there are any tickets
   if (tickets.length === 0) {
-
     // Retry ticket search
     reloadPage();
     return;

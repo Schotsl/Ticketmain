@@ -120,6 +120,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         divElement.classList.toggle("ticketmain_hidden");
       }
+
+      for (let popupInput of popupInputs) {
+        popupInput.setAttribute("disabled", true);
+      }
     });
   }
 
