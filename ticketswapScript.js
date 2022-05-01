@@ -1,6 +1,6 @@
 function getTickets() {
   const availableTicketsField = document.querySelector(
-    "[data-testid='available-tickets-list']"
+    "[data-testid='available-tickets-list']",
   );
 
   if (!availableTicketsField) {
@@ -12,8 +12,13 @@ function getTickets() {
 
   for (let i = 0; i < liItems.length; i++) {
     const ticket = liItems[i];
-    const ticketAmount = parseInt(ticket.getElementsByTagName("h4")[0].innerText.split(" ")[0]);
-    const ticketPrice = parseFloat(ticket.getElementsByTagName("strong")[0].innerText.split("\n")[0].substring(1));
+    const ticketAmount = parseInt(
+      ticket.getElementsByTagName("h4")[0].innerText.split(" ")[0],
+    );
+    const ticketPrice = parseFloat(
+      ticket.getElementsByTagName("strong")[0].innerText.split("\n")[0]
+        .substring(1),
+    );
     tickets.push({ htmlElement: ticket, ticketAmount, ticketPrice });
   }
 
@@ -58,7 +63,7 @@ function checkForTickets() {
 
     // Retry ticket search
     reloadPage();
-    return
+    return;
   }
 
   // Check all the available tickets
@@ -66,12 +71,17 @@ function checkForTickets() {
     const ticket = tickets[i];
 
     // Check if the ticket is within the price range
-    if ((ticket.ticketAmount == amount || amount == 0) && ticket.ticketPrice >= minPrice && ticket.ticketPrice <= maxPrice) {
+    if (
+      (ticket.ticketAmount == amount || amount == 0) &&
+      ticket.ticketPrice >= minPrice && ticket.ticketPrice <= maxPrice
+    ) {
       console.log("Matching ticket found!");
       selectTicket(ticket);
 
       // Wait for new page load
-      setTimeout(() => { findBuyTicketButton().click() }, 3000);
+      setTimeout(() => {
+        findBuyTicketButton().click();
+      }, 3000);
       return;
     } else {
       console.log("Ticket didn't match price range");
@@ -85,7 +95,13 @@ function checkForTickets() {
 // Update options
 let minPrice = 0, maxPrice = 100, amount = 0, interval = 10000, disabled = true;
 
-chrome.storage.sync.get(["ticketmain_min", "ticketmain_max", "ticketmain_amount", "ticketmain_interval", "ticketmain_disabled"], function (result) {
+chrome.storage.sync.get([
+  "ticketmain_min",
+  "ticketmain_max",
+  "ticketmain_amount",
+  "ticketmain_interval",
+  "ticketmain_disabled",
+], function (result) {
   minPrice = result.ticketmain_min;
   maxPrice = result.ticketmain_max;
   amount = result.ticketmain_amount;
