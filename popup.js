@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  letclar
-   popupInputs = document.getElementsByTagName("input");
+  let popupInputs = document.getElementsByTagName("input");
   let popupDisabled = false;
 
   const imgElement = document.getElementById("ticketmain_img");
