@@ -1,3 +1,7 @@
+/**
+ * Find all the tickets on the page
+ * @returns {Array} Array of ticket objects
+ */
 function getTickets() {
   const availableTicketsField = document.querySelector(
     "[data-testid='available-tickets-list']",
@@ -25,10 +29,18 @@ function getTickets() {
   return tickets;
 }
 
+/**
+ * Follow the provided ticket
+ * @param {*} ticket
+ */
 function selectTicket(ticket) {
   ticket.htmlElement.getElementsByTagName("a")[0].click();
 }
 
+/**
+ * Search the page for the buy ticket button
+ * @returns {HTMLElement} The buy ticket button
+ */
 function findBuyTicketButton() {
   const buttons = document.getElementsByTagName("button");
 
@@ -40,6 +52,9 @@ function findBuyTicketButton() {
   }
 }
 
+/**
+ * Reload the page
+ */
 function reloadPage() {
   console.log("Reloading page in " + interval / 1000 + " seconds");
   setTimeout(() => {
@@ -47,6 +62,9 @@ function reloadPage() {
   }, interval);
 }
 
+/**
+ * Automatically search for tickets
+ */
 function checkForTickets() {
   console.log("Checking for tickets...");
   // Stop when disabled
@@ -72,7 +90,7 @@ function checkForTickets() {
 
     // Check if the ticket is within the price range
     if (
-      (ticket.ticketAmount == amount || amount == 0) &&
+      (ticket.ticketAmount <= maxAmount && ticket.ticketAmount >= minAmount) &&
       ticket.ticketPrice >= minPrice && ticket.ticketPrice <= maxPrice
     ) {
       console.log("Matching ticket found!");
@@ -92,34 +110,45 @@ function checkForTickets() {
   reloadPage();
 }
 
-// Update options
-let minPrice = 0, maxPrice = 100, amount = 0, interval = 10000, disabled = true;
+// User variables
+let minPrice = 0.0,
+  maxPrice = 100.0,
+  minAmount = 1,
+  maxAmount = 10,
+  interval = 5000,
+  disabled = true;
 
+// Get user variables from storage
 chrome.storage.sync.get([
-  "ticketmain_min",
-  "ticketmain_max",
-  "ticketmain_amount",
-  "ticketmain_interval",
+  "ticketmain_price_min",
+  "ticketmain_price_max",
+  "ticketmain_amount_min",
+  "ticketmain_interval_max",
   "ticketmain_disabled",
 ], function (result) {
-  minPrice = result.ticketmain_min;
-  maxPrice = result.ticketmain_max;
-  amount = result.ticketmain_amount;
+  minPrice = result.ticketmain_price_min;
+  maxPrice = result.ticketmain_price_max;
+  minAmount = result.ticketmain_amount_min;
+  maxAmount = result.ticketmain_amount_max;
   interval = result.ticketmain_interval;
   disabled = result.ticketmain_disabled;
 
+  // Register listener for changes in user variables
   chrome.storage.onChanged.addListener(function (changes, namespace) {
     if (namespace === "sync") {
-      for (let key in changes) {
+      for (const key in changes) {
         switch (key) {
-          case "ticketmain_min":
+          case "ticketmain_price_min":
             minPrice = changes[key].newValue;
             break;
-          case "ticketmain_max":
+          case "ticketmain_price_max":
             maxPrice = changes[key].newValue;
             break;
-          case "ticketmain_amount":
-            amount = changes[key].newValue;
+          case "ticketmain_amount_min":
+            minAmount = changes[key].newValue;
+            break;
+          case "ticketmain_amount_max":
+            maxAmount = changes[key].newValue;
             break;
           case "ticketmain_interval":
             interval = changes[key].newValue;
@@ -133,8 +162,5 @@ chrome.storage.sync.get([
     }
   });
 
-  console.log("TicketSwap detected! Running script...");
-
   if (!disabled) checkForTickets();
-  else console.log("Extention is disabled");
 });
