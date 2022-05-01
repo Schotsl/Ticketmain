@@ -1,18 +1,6 @@
-function setLogo(logoName = "logo") {
-  chrome.action.setIcon({
-    path: {
-      "16": `/assets/${logoName}/icon_16.png`,
-      "32": `/assets/${logoName}/icon_32.png`,
-      "48": `/assets/${logoName}/icon_48.png`,
-      "128": `/assets/${logoName}/icon_128.png`,
-      "215": `/assets/${logoName}/icon_215.png`,
-      "256": `/assets/${logoName}/icon_256.png`,
-    },
-  });
-}
-
 document.addEventListener("DOMContentLoaded", function () {
-  let popupInputs = document.getElementsByTagName("input");
+  letclar
+   popupInputs = document.getElementsByTagName("input");
   let popupDisabled = false;
 
   const imgElement = document.getElementById("ticketmain_img");
@@ -44,11 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (popupDisabled) {
       imgElement.classList.add("disabled");
       bodyElement.classList.add("disabled");
-      setLogo("logo_disabled");
     } else {
       imgElement.classList.remove("disabled");
       bodyElement.classList.remove("disabled");
-      setLogo();
     }
   });
 
@@ -84,16 +70,12 @@ document.addEventListener("DOMContentLoaded", function () {
       imgElement.classList.add("disabled");
       bodyElement.classList.add("disabled");
 
-      setLogo("logo_disabled");
-
       for (let popupInput of popupInputs) {
         popupInput.setAttribute("disabled", true);
       }
     } else {
       imgElement.classList.remove("disabled");
       bodyElement.classList.remove("disabled");
-
-      setLogo();
 
       for (let popupInput of popupInputs) {
         popupInput.removeAttribute("disabled");
