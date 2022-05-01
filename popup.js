@@ -61,15 +61,16 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       input: document.getElementById("ticketmain_advanced_interval_input"),
       error: document.getElementById("ticketmain_advanced_interval_error"),
-      label: "ticketmain_advanced_interval_value", 
+      label: "ticketmain_advanced_interval_value",
       max: 10,
       min: 0.5,
     },
   ];
 
-  let popupInputs = document.querySelectorAll("form input");
+
   let popupEnabled = false;
 
+  const popupInputs = document.querySelectorAll("form input");
   const legendElements = document.getElementsByTagName("legend");
 
   const formElement = document.getElementById("ticketmain_form");
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
   inputObjects.forEach((inputObject) => {
     const { label, input } = inputObject;
 
-    chrome.storage.sync.get([ label ], (result) => {
+    chrome.storage.sync.get([label], (result) => {
       input.value = result[label];
     });
   });
@@ -121,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         divElement.classList.toggle("ticketmain_hidden");
       }
 
-      for (let popupInput of popupInputs) {
+      for (const popupInput of popupInputs) {
         popupInput.setAttribute("disabled", true);
       }
     });
@@ -135,13 +136,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (toggleElement.checked) {
       containerElement.classList.remove("disabled");
 
-      for (let popupInput of popupInputs) {
+      for (const popupInput of popupInputs) {
         popupInput.removeAttribute("disabled");
       }
     } else {
       containerElement.classList.add("disabled");
 
-      for (let popupInput of popupInputs) {
+      for (const popupInput of popupInputs) {
         popupInput.setAttribute("disabled", true);
       }
     }
