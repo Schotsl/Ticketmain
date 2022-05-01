@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Store every input in Chrome storage
     inputObjects.forEach((inputObject) => {
       const { input, label } = inputObject;
-      alert(input.value);
       chrome.storage.sync.set({ [label]: input.value });
     });
   });
