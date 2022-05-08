@@ -28,7 +28,9 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onStartup.addListener(async () => {
-  const result = await chrome.storage.sync.get(["ticketmain_dropdown_disabled"]);
+  const result = await chrome.storage.sync.get([
+    "ticketmain_dropdown_disabled",
+  ]);
 
   if (result.ticketmain_dropdown_disabled) {
     setLogo("logo_disabled");

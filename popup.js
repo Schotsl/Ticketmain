@@ -5,7 +5,7 @@ function validateInput(input, error, min, max) {
   // Make sure there is any input
   if (input.value === "") {
     error.textContent = "Minimum price is required";
-    input.classList.add('invalid');
+    input.classList.add("invalid");
 
     return false;
   }
@@ -13,7 +13,7 @@ function validateInput(input, error, min, max) {
   // Make sure the input is a number
   if (Number.isInteger(input.value)) {
     error.textContent = "Minimum price should be a number";
-    input.classList.add('invalid');
+    input.classList.add("invalid");
 
     return false;
   }
@@ -21,14 +21,14 @@ function validateInput(input, error, min, max) {
   // Make sure the input is between the given parameters
   if (parseFloat(input.value) < min) {
     error.textContent = `Minimum price should be equal or above ${min}`;
-    input.classList.add('invalid');
+    input.classList.add("invalid");
 
     return false;
   }
 
   if (parseFloat(input.value) > max) {
     error.textContent = `Minimum price should be equal or below ${max}`;
-    input.classList.add('invalid');
+    input.classList.add("invalid");
 
     return false;
   }
@@ -39,14 +39,14 @@ function validateInput(input, error, min, max) {
 function watchInputs() {
   const containers = document.getElementsByTagName("div");
 
-  for (let i = 0; i < containers.length; i ++) {
+  for (let i = 0; i < containers.length; i++) {
     const container = containers[i];
 
     const input = container.getElementsByTagName("input")[0];
     const error = container.getElementsByTagName("label")[1];
 
-    input.addEventListener('input', () => {
-      input.classList.remove('invalid');
+    input.addEventListener("input", () => {
+      input.classList.remove("invalid");
       error.textContent = "";
     });
   }
@@ -78,7 +78,7 @@ function watchForm(inputs) {
       await chrome.storage.sync.set({ [label]: parseFloat(target.value) });
     }
 
-    window.close();
+    self.close();
   });
 }
 
@@ -161,7 +161,6 @@ async function setupButton() {
   ];
 
   const results = await chrome.storage.sync.get(fields);
-  const element = document.getElementById("ticketmain_toggle");
 
   // Set the status of the fieldsets
   toggleButton(!results.ticketmain_dropdown_disabled);
@@ -179,11 +178,10 @@ function toggleButton(status) {
   const container = document.getElementById("ticketmain_container");
   const header = document.getElementsByTagName("header")[0];
 
-
   button.checked = status;
 
   // Update the storage
-  chrome.storage.sync.set({ ['ticketmain_dropdown_disabled']: !status });
+  chrome.storage.sync.set({ ["ticketmain_dropdown_disabled"]: !status });
 
   if (status) {
     header.classList.remove("grey");
