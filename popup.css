@@ -63,6 +63,14 @@ header {
   padding: 1rem;
   background-color: #423f3e;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+  background-image: url('assets/banner.png');
+  background-size: cover;
+  background-position: 50% 70%;
+}
+
+header.grey {
+  background-image: url('assets/banner_disabled.png');
 }
 
 div {
