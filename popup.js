@@ -145,12 +145,10 @@ async function setupButton() {
   ];
 
   const results = await chrome.storage.sync.get(fields);
-  const elements = [document.getElementById("ticketmain_toggle")];
+  const element = document.getElementById("ticketmain_toggle");
 
   // Set the status of the fieldsets
-  elements.forEach((element) => {
-    toggleButton(element, results[element.id]);
-  });
+  toggleButton(results.ticketmain_dropdown_disabled);
 }
 
 function watchButton() {
@@ -165,6 +163,9 @@ function toggleButton(status) {
   const container = document.getElementById("ticketmain_container");
 
   button.checked = status;
+
+  // Update the storage
+  chrome.storage.sync.set({ ['ticketmain_dropdown_disabled']: status });
 
   if (status) {
     container.classList.remove("disabled");
