@@ -253,6 +253,10 @@ div label:last-of-type {
   margin-top: .3rem;
 }
 
+div label:last-of-type:empty {
+  display: none;
+}
+
 .invalid {
   color: red;
   border-color: red;
