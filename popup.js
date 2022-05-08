@@ -2,6 +2,8 @@ function validateInput(input, error, min, max) {
   // Remove error message if it exists
   error.textContent = "";
 
+  console.log(input.value);
+
   // Make sure there is any input
   if (input.value === "") {
     error.textContent = "Minimum price is required";
@@ -38,9 +40,12 @@ function watchForm(inputs) {
     // Validate every input
     for (let i = 0; i < inputs.length; i++) {
       const input = inputs[i];
-      const { target, error, min, max } = input;
+      const { parent, target, error, min, max } = input;
 
-      if (!validateInput(target, error, min, max)) return;
+      if (!validateInput(target, error, min, max)) {
+        toggleLegend(parent, true);
+        return;
+      }
     }
 
     // Store every input in Chrome storage
@@ -173,6 +178,7 @@ function toggleButton(status) {
 document.addEventListener("DOMContentLoaded", async () => {
   const inputs = [
     {
+      parent: document.getElementById("ticketmain_fieldset_price"),
       target: document.getElementById("ticketmain_price_min_input"),
       error: document.getElementById("ticketmain_price_min_error"),
       label: "ticketmain_price_min",
@@ -180,6 +186,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       min: 0,
     },
     {
+      parent: document.getElementById("ticketmain_fieldset_price"),
       target: document.getElementById("ticketmain_price_max_input"),
       error: document.getElementById("ticketmain_price_max_error"),
       label: "ticketmain_price_max",
@@ -187,6 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       min: 0,
     },
     {
+      parent: document.getElementById("ticketmain_fieldset_amount"),
       target: document.getElementById("ticketmain_amount_min_input"),
       error: document.getElementById("ticketmain_amount_min_error"),
       label: "ticketmain_amount_min",
@@ -194,6 +202,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       min: 0,
     },
     {
+      parent: document.getElementById("ticketmain_fieldset_amount"),
       target: document.getElementById("ticketmain_amount_max_input"),
       error: document.getElementById("ticketmain_amount_max_error"),
       label: "ticketmain_amount_max",
@@ -201,6 +210,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       min: 0,
     },
     {
+      parent: document.getElementById("ticketmain_fieldset_advanced"),
       target: document.getElementById("ticketmain_advanced_interval_input"),
       error: document.getElementById("ticketmain_advanced_interval_error"),
       label: "ticketmain_advanced_interval",
