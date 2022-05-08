@@ -148,7 +148,7 @@ async function setupButton() {
   const element = document.getElementById("ticketmain_toggle");
 
   // Set the status of the fieldsets
-  toggleButton(results.ticketmain_dropdown_disabled);
+  toggleButton(!results.ticketmain_dropdown_disabled);
 }
 
 function watchButton() {
@@ -165,7 +165,7 @@ function toggleButton(status) {
   button.checked = status;
 
   // Update the storage
-  chrome.storage.sync.set({ ['ticketmain_dropdown_disabled']: status });
+  chrome.storage.sync.set({ ['ticketmain_dropdown_disabled']: !status });
 
   if (status) {
     container.classList.remove("disabled");

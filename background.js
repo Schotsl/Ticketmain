@@ -28,9 +28,9 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onStartup.addListener(async () => {
-  const result = await chrome.storage.sync.get(["ticketmain_disabled"]);
+  const result = await chrome.storage.sync.get(["ticketmain_dropdown_disabled"]);
 
-  if (result.ticketmain_disabled) {
+  if (result.ticketmain_dropdown_disabled) {
     setLogo("logo_disabled");
   } else {
     setLogo();
@@ -39,7 +39,7 @@ chrome.runtime.onStartup.addListener(async () => {
 
 chrome.storage.onChanged.addListener(function (changes) {
   for (const [key, { newValue }] of Object.entries(changes)) {
-    if (key == "ticketmain_disabled") {
+    if (key == "ticketmain_dropdown_disabled") {
       if (newValue) setLogo("logo_disabled");
       else setLogo();
     }
