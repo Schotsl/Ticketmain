@@ -3,15 +3,27 @@
  * @returns {Array} Array of ticket objects
  */
 function getTickets() {
-  const availableTicketsField = document.querySelector(
+  let availableTicketsField = document.querySelector(
     "[data-testid='available-tickets-list']",
   );
 
   if (!availableTicketsField) {
-    return [];
+    const elements = Array.from(document.getElementsByTagName('h3'));
+    const results = elements.filter((element) => element.innerHTML === "Available");
+
+    if (results.length === 0) return [];
+
+    availableTicketsField = results[0].parentElement;
   }
 
-  const listItems = availableTicketsField.getElementsByTagName("li");
+  let listItems = availableTicketsField.getElementsByTagName("li");
+
+  if (Array.from(listItems).length === 0) {
+    listItems = availableTicketsField.getElementsByTagName("a");
+
+    if (Array.from(listItems).length === 0) return [];
+  }
+
   const tickets = [];
 
   for (let i = 0; i < listItems.length; i++) {
@@ -34,7 +46,11 @@ function getTickets() {
  * @param {{ htmlElement: HTMLElement, ticketAmount: number, ticketPrice: number }} ticket
  */
 function selectTicket(ticket) {
-  ticket.htmlElement.getElementsByTagName("a")[0].click();
+  if (ticket.htmlElement.tagName === "A") {
+    ticket.htmlElement.click();
+  } else {
+    ticket.htmlElement.getElementsByTagName("a")[0].click();
+  }
 }
 
 /**
@@ -56,9 +72,9 @@ function findBuyTicketButton() {
  * Reload the page
  */
 function reloadPage() {
-  setTimeout(() => {
-    window.location.reload();
-  }, interval);
+  // setTimeout(() => {
+  //   window.location.reload();
+  // }, interval);
 }
 
 /**
