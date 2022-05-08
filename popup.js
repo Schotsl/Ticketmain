@@ -6,7 +6,7 @@ function validateInput(input, error, min, max) {
   if (input.value === "") {
     error.textContent = "Minimum price is required";
     input.classList.add('invalid');
-    
+
     return false;
   }
 
@@ -39,7 +39,7 @@ function validateInput(input, error, min, max) {
 function watchForm(inputs) {
   const form = document.getElementById("ticketmain_form");
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     // Make sure the form doesn't process
     event.preventDefault();
 
@@ -59,8 +59,10 @@ function watchForm(inputs) {
       const input = inputs[i];
       const { target, label } = input;
 
-      chrome.storage.sync.set({ [label]: parseFloat(target.value) });
+      await chrome.storage.sync.set({ [label]: parseFloat(target.value) });
     }
+
+    window.close();
   });
 }
 
