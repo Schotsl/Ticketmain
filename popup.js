@@ -36,6 +36,22 @@ function validateInput(input, error, min, max) {
   return true;
 }
 
+function watchInputs() {
+  const containers = document.getElementsByTagName("div");
+
+  for (let i = 0; i < containers.length; i ++) {
+    const container = containers[i];
+
+    const input = container.getElementsByTagName("input")[0];
+    const error = container.getElementsByTagName("label")[1];
+
+    input.addEventListener('input', () => {
+      input.classList.remove('invalid');
+      error.textContent = "";
+    });
+  }
+}
+
 function watchForm(inputs) {
   const form = document.getElementById("ticketmain_form");
 
@@ -161,6 +177,8 @@ function toggleButton(status) {
   const button = document.getElementById("ticketmain_toggle");
   const inputs = document.querySelectorAll("form input");
   const container = document.getElementById("ticketmain_container");
+  const header = document.getElementsByTagName("header")[0];
+
 
   button.checked = status;
 
@@ -168,8 +186,10 @@ function toggleButton(status) {
   chrome.storage.sync.set({ ['ticketmain_dropdown_disabled']: !status });
 
   if (status) {
+    header.classList.remove("grey");
     container.classList.remove("disabled");
   } else {
+    header.classList.add("grey");
     container.classList.add("disabled");
   }
 
@@ -235,4 +255,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   watchLegends();
   watchButton();
   watchForm(inputs);
+
+  watchInputs();
 });
