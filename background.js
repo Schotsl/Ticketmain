@@ -21,7 +21,7 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.sync.set({ ticketmain_advanced_interval: 5.0 });
 
   chrome.storage.sync.set({ ticketmain_dropdown_disabled: true });
-  
+
   chrome.storage.sync.set({ ticketmain_fieldset_price: false });
   chrome.storage.sync.set({ ticketmain_fieldset_amount: true });
   chrome.storage.sync.set({ ticketmain_fieldset_advanced: false });

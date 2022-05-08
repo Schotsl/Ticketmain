@@ -28,11 +28,6 @@ function validateInput(input, error, min, max) {
   return true;
 }
 
-
-
-
-
-
 function watchForm(inputs) {
   const form = document.getElementById("ticketmain_form");
 
@@ -44,7 +39,7 @@ function watchForm(inputs) {
     for (let i = 0; i < inputs.length; i++) {
       const input = inputs[i];
       const { target, error, min, max } = input;
-      
+
       if (!validateInput(target, error, min, max)) return;
     }
 
@@ -69,16 +64,11 @@ async function setupForm(inputs) {
   }
 }
 
-
-
-
-
-
 async function setupLegends() {
   const fields = [
-    'ticketmain_fieldset_price',
-    'ticketmain_fieldset_amount',
-    'ticketmain_fieldset_advanced',
+    "ticketmain_fieldset_price",
+    "ticketmain_fieldset_amount",
+    "ticketmain_fieldset_advanced",
   ];
 
   const results = await chrome.storage.sync.get(fields);
@@ -86,10 +76,10 @@ async function setupLegends() {
     document.getElementById("ticketmain_fieldset_price"),
     document.getElementById("ticketmain_fieldset_amount"),
     document.getElementById("ticketmain_fieldset_advanced"),
-  ]
+  ];
 
   // Set the status of the fieldsets
-  elements.forEach(element => {
+  elements.forEach((element) => {
     toggleLegend(element, results[element.id]);
   });
 }
@@ -100,7 +90,7 @@ function watchLegends() {
   for (let i = 0; i < legends.length; i++) {
     const legend = legends[i];
     const parent = legend.parentElement;
-    
+
     legend.addEventListener("click", () => toggleLegend(parent));
   }
 }
@@ -110,7 +100,9 @@ function toggleLegend(fieldset, status = null) {
   const children = fieldset.getElementsByTagName("div");
 
   // If no status has been given we'll just toggle the fieldset
-  status = status !== null ? status : legend.classList.contains("ticketmain_closed");
+  status = status !== null
+    ? status
+    : legend.classList.contains("ticketmain_closed");
 
   // Update the storage
   chrome.storage.sync.set({ [fieldset.id]: status });
@@ -134,28 +126,23 @@ function toggleLegend(fieldset, status = null) {
   }
 }
 
-
-
-
-
-
 async function setupButton() {
   const fields = [
-    'ticketmain_dropdown_disabled',
+    "ticketmain_dropdown_disabled",
   ];
 
   const results = await chrome.storage.sync.get(fields);
-  const elements = [ document.getElementById("ticketmain_toggle") ];
+  const elements = [document.getElementById("ticketmain_toggle")];
 
   // Set the status of the fieldsets
-  elements.forEach(element => {
+  elements.forEach((element) => {
     toggleButton(element, results[element.id]);
   });
 }
 
 function watchButton() {
   const button = document.getElementById("ticketmain_toggle");
-    
+
   button.addEventListener("change", () => toggleButton(button.checked));
 }
 
@@ -182,11 +169,6 @@ function toggleButton(status) {
     }
   }
 }
-
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", async () => {
   const inputs = [
