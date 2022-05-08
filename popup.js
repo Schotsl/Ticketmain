@@ -2,28 +2,34 @@ function validateInput(input, error, min, max) {
   // Remove error message if it exists
   error.textContent = "";
 
-  console.log(input.value);
-
   // Make sure there is any input
   if (input.value === "") {
     error.textContent = "Minimum price is required";
+    input.classList.add('invalid');
+    
     return false;
   }
 
   // Make sure the input is a number
   if (Number.isInteger(input.value)) {
     error.textContent = "Minimum price should be a number";
+    input.classList.add('invalid');
+
     return false;
   }
 
   // Make sure the input is between the given parameters
   if (parseFloat(input.value) < min) {
     error.textContent = `Minimum price should be equal or above ${min}`;
+    input.classList.add('invalid');
+
     return false;
   }
 
   if (parseFloat(input.value) > max) {
     error.textContent = `Minimum price should be equal or below ${max}`;
+    input.classList.add('invalid');
+
     return false;
   }
 
