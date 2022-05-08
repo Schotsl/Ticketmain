@@ -15,6 +15,7 @@ h2:nth-of-type(2) {
   margin-top: 2rem;
 }
 legend {
+  color: #212529;
   float: left;
   padding: 0;
   margin: 0;
@@ -231,7 +232,12 @@ input[type=submit]:disabled {
 }
 
 footer {
+  color: #212529;
   text-align: center;
+}
+
+footer a {
+  color: #212529;
 }
 
 footer hr {
