@@ -8,8 +8,10 @@ function getTickets() {
   );
 
   if (!availableTicketsField) {
-    const elements = Array.from(document.getElementsByTagName('h3'));
-    const results = elements.filter((element) => element.innerHTML === "Available");
+    const elements = Array.from(document.getElementsByTagName("h3"));
+    const results = elements.filter((element) =>
+      element.innerHTML === "Available"
+    );
 
     if (results.length === 0) return [];
 
@@ -72,9 +74,9 @@ function findBuyTicketButton() {
  * Reload the page
  */
 function reloadPage() {
-  // setTimeout(() => {
-  //   window.location.reload();
-  // }, interval);
+  setTimeout(() => {
+    window.location.reload();
+  }, interval);
 }
 
 /**
