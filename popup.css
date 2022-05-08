@@ -229,3 +229,17 @@ footer {
 footer hr {
   margin-bottom: 10px;
 }
+
+div label:first-of-type {
+  margin-bottom: .3rem;
+}
+
+div label:last-of-type {
+  color: red;
+  margin-top: .3rem;
+}
+
+.invalid {
+  color: red;
+  border-color: red;
+}
